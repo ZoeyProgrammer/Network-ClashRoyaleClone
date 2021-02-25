@@ -1,0 +1,11 @@
+D:\Bilda\Prüfungen\Network\MyClashRoyaleClone\bin\Debug\MyMultiPlayerGame.exe.config
+D:\Bilda\Prüfungen\Network\MyClashRoyaleClone\bin\Debug\MyMultiPlayerGame.exe
+D:\Bilda\Prüfungen\Network\MyClashRoyaleClone\bin\Debug\MyMultiPlayerGame.pdb
+D:\Bilda\Prüfungen\Network\MyClashRoyaleClone\obj\Debug\MyClashRoyaleClone.csprojAssemblyReference.cache
+D:\Bilda\Prüfungen\Network\MyClashRoyaleClone\obj\Debug\MyMultiPlayerGame.MainWindow.resources
+D:\Bilda\Prüfungen\Network\MyClashRoyaleClone\obj\Debug\MyMultiPlayerGame.Canvas.resources
+D:\Bilda\Prüfungen\Network\MyClashRoyaleClone\obj\Debug\MyMultiPlayerGame.Properties.Resources.resources
+D:\Bilda\Prüfungen\Network\MyClashRoyaleClone\obj\Debug\MyClashRoyaleClone.csproj.GenerateResource.cache
+D:\Bilda\Prüfungen\Network\MyClashRoyaleClone\obj\Debug\MyClashRoyaleClone.csproj.CoreCompileInputs.cache
+D:\Bilda\Prüfungen\Network\MyClashRoyaleClone\obj\Debug\MyMultiPlayerGame.exe
+D:\Bilda\Prüfungen\Network\MyClashRoyaleClone\obj\Debug\MyMultiPlayerGame.pdb
