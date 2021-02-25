@@ -79,6 +79,9 @@ namespace MyMultiPlayerGame
 		{
 			if (connection != null)
 			{
+				//Show the Message in own Message feed
+				listBoxChat.Items.Add(textBoxUsername.Text + " (you): " + textBoxChatInput.Text);
+
 				connection.Send(new ChatMessage()
 				{
 					//Changed Sender to the Username Textbox to show the correct name
@@ -88,7 +91,7 @@ namespace MyMultiPlayerGame
 			}
 		}
 
-
+		//Here all Network Messages get processed - So every kind of communication takes place here
 		private void ProcessNetworkMessages()
 		{
 			while (IncomingNetworkMessages.TryDequeue(out var message))
