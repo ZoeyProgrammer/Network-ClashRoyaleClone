@@ -108,6 +108,20 @@ namespace MyMultiPlayerGame
 					this.myGame.Start(m.numPlayers, m.myPlayerNumber, new List<NetworkConnection>() { connection });
 
 				}
+				else if (message is ReadyGame)
+				{
+					var r = (ReadyGame)message;
+					if (r.readyStatus) //If the other person sends a ready signal
+					{
+						listBoxChat.Items.Add(r.Sender + " is ready");
+						//Unlock the ability to Start the game if you are host here
+					}
+					else
+					{
+						listBoxChat.Items.Add(r.Sender + " is no longer ready");
+						//Lock the ability to Start the game if you are host here
+					}
+				}
 				else if (message is GameInput)
 				{
 					this.myGame.ReceiveGameInput((GameInput)message);
@@ -157,7 +171,27 @@ namespace MyMultiPlayerGame
 		//Used to send Readyness status
 		private void buttonReady_Click(object sender, EventArgs e)
 		{
+			if (connection != null)
+			{
+				if (buttonReady.Text == "Ready")
+				{
+					//Show the Message in own Message feed
+					listBoxChat.Items.Add(textBoxUsername.Text + " (you) " + "is ready");
+					buttonReady.Text = "Unready";
 
+					//Sends a Ready Message
+					connection.Send(new ReadyGame() {Sender = textBoxUsername.Text, readyStatus = true} );
+				}
+				else
+				{
+					//Show the Message in own Message feed
+					listBoxChat.Items.Add(textBoxUsername.Text + " (you) " + "is no longer ready");
+					buttonReady.Text = "Ready";
+
+					//Sends a Ready Message
+					connection.Send(new ReadyGame() { Sender = textBoxUsername.Text, readyStatus = false });
+				}
+			}
 		}
 
 		private void textBoxUsername_TextChanged(object sender, EventArgs e)
