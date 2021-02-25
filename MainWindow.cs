@@ -58,7 +58,6 @@ namespace MyMultiPlayerGame
 			var connectedClient = this.listener.AcceptTcpClient();
 
 			MessageBox.Show("Client has connected!!!");
-			this.buttonStartGame.Enabled = true;
 
 			connection = new NetworkConnection(connectedClient);
 			connection.MessageReceived += ConnectionOnMessageReceived;
@@ -66,7 +65,13 @@ namespace MyMultiPlayerGame
 			this.buttonOpenServer.Enabled = false;
 			this.buttonConnect.Enabled = false;
 			this.textBoxUsername.Enabled = false; //Dont allow changing of username after a connection has been established
-			this.buttonReady.Enabled = true;	//Allow readyness when connection has been established
+
+			//Automatically set Ready, since host needs to start anyways.
+			listBoxChat.Items.Add(textBoxUsername.Text + " (you) " + "is ready");
+			buttonReady.Text = "Unready";
+
+			//Sends a Ready Message
+			connection.Send(new ReadyGame() { Sender = textBoxUsername.Text, readyStatus = true });
 		}
 
 		private void ConnectionOnMessageReceived(MessageBase message)
@@ -107,6 +112,10 @@ namespace MyMultiPlayerGame
 					// I am a client, StartGame comes from server
 					this.myGame.Start(m.numPlayers, m.myPlayerNumber, new List<NetworkConnection>() { connection });
 
+					//Show that the Game has been started by sending a message in chat
+					listBoxChat.Items.Add("The Host has started the game!");
+
+					buttonReady.Enabled = false; //Readyness is manditory at this point
 				}
 				else if (message is ReadyGame)
 				{
@@ -114,12 +123,18 @@ namespace MyMultiPlayerGame
 					if (r.readyStatus) //If the other person sends a ready signal
 					{
 						listBoxChat.Items.Add(r.Sender + " is ready");
-						//Unlock the ability to Start the game if you are host here
+						if (isServer)//Unlock the ability to Start the game if you are host here
+						{
+							buttonStartGame.Enabled = true;
+						}
 					}
 					else
 					{
 						listBoxChat.Items.Add(r.Sender + " is no longer ready");
-						//Lock the ability to Start the game if you are host here
+						if (isServer)//Lock the ability to Start the game if you are host here
+						{
+							buttonStartGame.Enabled = false;
+						}
 					}
 				}
 				else if (message is GameInput)
@@ -165,6 +180,9 @@ namespace MyMultiPlayerGame
 					numPlayers = 2,
 					myPlayerNumber = 1
 				});
+
+				//Push a Message in chat, just because it's always good to have all information logged
+				listBoxChat.Items.Add("The Host has started the game!");
 			}
 		}
 
