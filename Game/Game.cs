@@ -18,10 +18,14 @@ namespace MyMultiPlayerGame.Game
 			public float Y;
 		}
 
+		//All variables needed for the game
 		public int numPlayers { get; private set; }
 		public int myPlayerNumber { get; private set; }
 		public int boardWidth { get; private set; }
 		public int boardHeight { get; private set; }
+		public int playerHP { get; private set; }	//Player's HP
+		public int playerEnergy { get; private set; }	//Player Energy
+		public int playerMaxEnergy { get; private set; } //Maximum amount of Energy
 
 		InputEvent[] collectedInputEvents;                              // events needed for next simulation
 		List<GameInput> futureEvents = new List<GameInput>();           // events needed after next simulation
@@ -29,9 +33,13 @@ namespace MyMultiPlayerGame.Game
 		InputEvent myInput = null;
 		List<NetworkConnection> peers;
 
+		//Setting all the standart Variables etc.
 		public void Start(int numPlayers, int myPlayerNumber, List<NetworkConnection> peers)
 		{
 			System.Diagnostics.Debug.WriteLine("Start()");
+			this.playerHP = 100;
+			this.playerEnergy = 10;
+			this.playerMaxEnergy = 10;
 			this.boardHeight = 300;
 			this.boardWidth = 600;
 			this.running = true;
