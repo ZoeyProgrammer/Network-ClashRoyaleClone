@@ -197,8 +197,8 @@
         private System.Windows.Forms.Button buttonStartGame;
 		private System.Windows.Forms.Button buttonReady;
 		private System.Windows.Forms.TextBox textBoxUsername;
-		private System.Windows.Forms.Label labelPlayer0HP;
-		private System.Windows.Forms.Label labelPlayer1HP;
+		public System.Windows.Forms.Label labelPlayer0HP;
+		public System.Windows.Forms.Label labelPlayer1HP;
 	}
 }
 

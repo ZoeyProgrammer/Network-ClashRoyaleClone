@@ -19,14 +19,15 @@ namespace MyMultiPlayerGame.Game
 		}
 
 		//All variables needed for the game
+		public MainWindow window { get; set; }
 		public int numPlayers { get; private set; }
 		public int myPlayerNumber { get; private set; }
 		public int boardWidth { get; private set; }
 		public int boardHeight { get; private set; }
-		public int enemyHP { get; private set; } //Enemies's HP
-		public string enemyName { get; set; } //Enemies's Username
-		public int playerHP { get; private set; } //Player's HP
-		public string playerName { get; set; } //Player's Username
+		public int player0HP { get; private set; } //Host HP
+		public string player0Name { get; set; } //Host Username
+		public int player1HP { get; private set; } //User HP
+		public string player1Name { get; set; } //User Username
 		public int playerEnergy { get; private set; }	//Player Energy
 		public int playerMaxEnergy { get; private set; } //Maximum amount of Energy
 
@@ -40,8 +41,8 @@ namespace MyMultiPlayerGame.Game
 		public void Start(int numPlayers, int myPlayerNumber, List<NetworkConnection> peers)
 		{
 			System.Diagnostics.Debug.WriteLine("Start()");
-			this.enemyHP = 100;
-			this.playerHP = 100;
+			this.player0HP = 100;
+			this.player1HP = 100;
 			this.playerEnergy = 10;
 			this.playerMaxEnergy = 10;
 			this.boardHeight = 300;
@@ -52,6 +53,10 @@ namespace MyMultiPlayerGame.Game
 			this.myPlayerNumber = myPlayerNumber;
 			this.collectedInputEvents = new InputEvent[numPlayers];
 			this.peers = peers;
+
+			//Inititilize the visible HP values
+			window.labelPlayer1HP.Text = this.player1Name + ": " + this.player1HP;
+			window.labelPlayer0HP.Text = this.player0Name + ": " + this.player0HP;
 
 			this.allGameObjects.Clear();
 
