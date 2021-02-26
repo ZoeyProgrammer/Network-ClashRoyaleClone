@@ -10,6 +10,7 @@ namespace MyMultiPlayerGame.Game
 		bool running;
 		int simStepCount;
 		List<GameObject> allGameObjects = new List<GameObject>();
+		List<GameObject> deadGameObjects = new List<GameObject>();
 
 		public class InputEvent
 		{
@@ -174,6 +175,12 @@ namespace MyMultiPlayerGame.Game
 				g.NextSimulationStep();
 			}
 
+			//Clearup all corpses
+			foreach (var g in deadGameObjects)
+			{
+				this.allGameObjects.Remove(g);
+			}
+
 			SendInput();
 
 			// if we already have inputs for the new simulation step, use them now
@@ -196,6 +203,12 @@ namespace MyMultiPlayerGame.Game
 			}
 		}
 
+		public void DestroySoldier(Soldier soldier)
+		{
+			this.deadGameObjects.Add(soldier);
+		}
+
+		//Used to Deal Damage to Players
 		public void DealPlayerDamge(int playerNum, int dmg)
 		{
 			if (playerNum == 0)
@@ -208,6 +221,26 @@ namespace MyMultiPlayerGame.Game
 				this.player1HP -= dmg;
 				this.window.labelPlayer1HP.Text = this.player1Name + ": " + this.player1HP;
 			}
+		}
+
+		//Used to Find the Enemy within distance with lowest HP
+		public Soldier FindEnemy(Soldier soldier, float distance)
+		{
+			Soldier output = null;
+			foreach (GameObject obj in this.allGameObjects)
+			{
+				if (obj is Soldier)
+				{
+					Soldier s = (Soldier)obj;
+					if (soldier.Player != s.Player && distance > Math.Sqrt(Math.Pow(soldier.X - s.X, 2) + Math.Pow(soldier.Y - s.Y, 2)) )
+					{
+						//Is withhin Range and an Enemy
+						if (output == null || output.HP > s.HP) //And has the least HP
+							output = s;
+					}
+				}
+			}
+			return output;
 		}
 
 		public void SpawnSoldier(float x, float y)

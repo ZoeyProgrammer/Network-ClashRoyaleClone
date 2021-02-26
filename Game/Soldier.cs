@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 
 namespace MyMultiPlayerGame.Game
 {
@@ -28,6 +29,12 @@ namespace MyMultiPlayerGame.Game
 
 		public override void NextSimulationStep()
 		{
+			if (this.HP <= 0)
+			{
+				this.Game.DestroySoldier(this);
+				return;
+			}
+
 			if (FireCooldown > 0)
 				FireCooldown -= 0.1f;
 
@@ -45,14 +52,28 @@ namespace MyMultiPlayerGame.Game
 						this.Game.DealPlayerDamge(0, this.Damage);
 				}
 			}
-			else if (false)
+			else if (this.Game.FindEnemy(this, this.FireRange) != null)
 			{
 				// enemy unit in range!
+				Soldier enemy = this.Game.FindEnemy(this, this.FireRange);
 
+				if (this.FireCooldown <= 0) //And the Cooldown has ticked down
+				{
+					this.FireCooldown = this.FireFrequency;
+					enemy.HP -= this.Damage;
+				}
 			}
-			else if (false)
+			else if (this.Game.FindEnemy(this, this.ViewRange) != null)
 			{
 				// enemy unit in sight!
+				Soldier enemy = this.Game.FindEnemy(this, this.ViewRange);
+				float Xdif = enemy.X - this.X;
+				float Ydif = enemy.Y - this.Y;
+				float distance = (float)Math.Sqrt(Math.Pow(enemy.X - this.X, 2) + Math.Pow(enemy.Y - this.Y, 2));
+
+				//Go towards that unit
+				this.X += this.Speed * (Xdif / distance);
+				this.Y += this.Speed * (Ydif / distance);
 			}
 			else
 			{
