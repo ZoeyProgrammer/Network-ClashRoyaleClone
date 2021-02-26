@@ -40,6 +40,8 @@
 			this.buttonStartGame = new System.Windows.Forms.Button();
 			this.buttonReady = new System.Windows.Forms.Button();
 			this.textBoxUsername = new System.Windows.Forms.TextBox();
+			this.labelPlayer0HP = new System.Windows.Forms.Label();
+			this.labelPlayer1HP = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// buttonConnect
@@ -139,11 +141,31 @@
 			this.textBoxUsername.Text = "username";
 			this.textBoxUsername.TextChanged += new System.EventHandler(this.textBoxUsername_TextChanged);
 			// 
+			// labelPlayer0HP
+			// 
+			this.labelPlayer0HP.AutoSize = true;
+			this.labelPlayer0HP.Location = new System.Drawing.Point(71, 79);
+			this.labelPlayer0HP.Name = "labelPlayer0HP";
+			this.labelPlayer0HP.Size = new System.Drawing.Size(82, 13);
+			this.labelPlayer0HP.TabIndex = 10;
+			this.labelPlayer0HP.Text = "Username0: HP";
+			// 
+			// labelPlayer1HP
+			// 
+			this.labelPlayer1HP.AutoSize = true;
+			this.labelPlayer1HP.Location = new System.Drawing.Point(414, 79);
+			this.labelPlayer1HP.Name = "labelPlayer1HP";
+			this.labelPlayer1HP.Size = new System.Drawing.Size(82, 13);
+			this.labelPlayer1HP.TabIndex = 11;
+			this.labelPlayer1HP.Text = "Username1: HP";
+			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(829, 628);
+			this.Controls.Add(this.labelPlayer1HP);
+			this.Controls.Add(this.labelPlayer0HP);
 			this.Controls.Add(this.textBoxUsername);
 			this.Controls.Add(this.buttonReady);
 			this.Controls.Add(this.buttonStartGame);
@@ -175,6 +197,8 @@
         private System.Windows.Forms.Button buttonStartGame;
 		private System.Windows.Forms.Button buttonReady;
 		private System.Windows.Forms.TextBox textBoxUsername;
+		private System.Windows.Forms.Label labelPlayer0HP;
+		private System.Windows.Forms.Label labelPlayer1HP;
 	}
 }
 

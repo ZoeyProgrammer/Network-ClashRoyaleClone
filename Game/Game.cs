@@ -23,7 +23,10 @@ namespace MyMultiPlayerGame.Game
 		public int myPlayerNumber { get; private set; }
 		public int boardWidth { get; private set; }
 		public int boardHeight { get; private set; }
-		public int playerHP { get; private set; }	//Player's HP
+		public int enemyHP { get; private set; } //Enemies's HP
+		public string enemyName { get; set; } //Enemies's Username
+		public int playerHP { get; private set; } //Player's HP
+		public string playerName { get; set; } //Player's Username
 		public int playerEnergy { get; private set; }	//Player Energy
 		public int playerMaxEnergy { get; private set; } //Maximum amount of Energy
 
@@ -37,6 +40,7 @@ namespace MyMultiPlayerGame.Game
 		public void Start(int numPlayers, int myPlayerNumber, List<NetworkConnection> peers)
 		{
 			System.Diagnostics.Debug.WriteLine("Start()");
+			this.enemyHP = 100;
 			this.playerHP = 100;
 			this.playerEnergy = 10;
 			this.playerMaxEnergy = 10;

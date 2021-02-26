@@ -49,6 +49,8 @@ namespace MyMultiPlayerGame
 			this.buttonConnect.Enabled = false;
 			this.textBoxUsername.Enabled = false; //Dont allow changing of username after a connection has been established
 			this.buttonReady.Enabled = true;  //Allow readyness when connection has been established
+
+			this.myGame.playerName = this.textBoxUsername.Text; //Set the Playername for the rest of the game
 		}
 
 		private void buttonOpenServer_Click(object sender, EventArgs e)
@@ -65,6 +67,7 @@ namespace MyMultiPlayerGame
 			this.buttonOpenServer.Enabled = false;
 			this.buttonConnect.Enabled = false;
 			this.textBoxUsername.Enabled = false; //Dont allow changing of username after a connection has been established
+			this.myGame.playerName = this.textBoxUsername.Text; //Set the Playername for the rest of the game
 
 			//Automatically set Ready, since host needs to start anyways.
 			listBoxChat.Items.Add(textBoxUsername.Text + " (you) " + "is ready");
@@ -115,11 +118,18 @@ namespace MyMultiPlayerGame
 					//Show that the Game has been started by sending a message in chat
 					listBoxChat.Items.Add("The Host has started the game!");
 
+					//Inititialize theese
+					this.labelPlayer1HP.Text = this.myGame.playerName + ": " + this.myGame.playerHP;
+					this.labelPlayer0HP.Text = this.myGame.enemyName + ": " + this.myGame.enemyHP;
+
 					buttonReady.Enabled = false; //Readyness is manditory at this point
 				}
 				else if (message is ReadyGame)
 				{
 					var r = (ReadyGame)message;
+
+					this.myGame.enemyName = r.Sender;
+
 					if (r.readyStatus) //If the other person sends a ready signal
 					{
 						listBoxChat.Items.Add(r.Sender + " is ready");
@@ -173,7 +183,10 @@ namespace MyMultiPlayerGame
 				this.BeginInvoke(new Action(() =>
 				{
 					myGame.Start(2, 0, new List<NetworkConnection>() { connection });
+					this.labelPlayer0HP.Text = this.myGame.playerName + ": " + this.myGame.playerHP;
+					this.labelPlayer1HP.Text = this.myGame.enemyName + ": " + this.myGame.enemyHP;
 				}));
+
 
 				this.connection.Send(new StartGame()
 				{
