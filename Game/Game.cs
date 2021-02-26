@@ -26,9 +26,9 @@ namespace MyMultiPlayerGame.Game
 		public int boardHeight { get; private set; }
 		public int player0HP { get; private set; } //Host HP
 		public string player0Name { get; set; } //Host Username
-		public int player1HP { get; private set; } //User HP
+		public int player1HP { get; set; } //User HP
 		public string player1Name { get; set; } //User Username
-		public int playerEnergy { get; private set; }	//Player Energy
+		public int playerEnergy { get; set; }	//Player Energy
 		public int playerMaxEnergy { get; private set; } //Maximum amount of Energy
 
 		InputEvent[] collectedInputEvents;                              // events needed for next simulation
@@ -55,8 +55,8 @@ namespace MyMultiPlayerGame.Game
 			this.peers = peers;
 
 			//Inititilize the visible HP values
-			window.labelPlayer1HP.Text = this.player1Name + ": " + this.player1HP;
-			window.labelPlayer0HP.Text = this.player0Name + ": " + this.player0HP;
+			this.window.labelPlayer1HP.Text = this.player1Name + ": " + this.player1HP;
+			this.window.labelPlayer0HP.Text = this.player0Name + ": " + this.player0HP;
 
 			this.allGameObjects.Clear();
 
@@ -193,6 +193,20 @@ namespace MyMultiPlayerGame.Game
 			foreach (var o in allGameObjects)
 			{
 				o.Render(g);
+			}
+		}
+
+		public void DealPlayerDamge(int playerNum, int dmg)
+		{
+			if (playerNum == 0)
+			{
+				this.player0HP -= dmg;
+				this.window.labelPlayer0HP.Text = this.player0Name + ": " + this.player0HP;
+			}
+			else if (playerNum == 1)
+			{
+				this.player1HP -= dmg;
+				this.window.labelPlayer1HP.Text = this.player1Name + ": " + this.player1HP;
 			}
 		}
 

@@ -11,6 +11,7 @@ namespace MyMultiPlayerGame.Game
 		public float FireFrequency { get; private set; }
 		public int Damage { get; private set; }
 		public int Player { get; private set; }
+		private float FireCooldown;
 
 		public Soldier(Game game, int player)
 				: base(game)
@@ -22,15 +23,36 @@ namespace MyMultiPlayerGame.Game
 			this.FireFrequency = 0.5f;
 			this.ViewRange = 200;
 			this.FireRange = 100;
+			this.FireCooldown = 0;
 		}
 
 		public override void NextSimulationStep()
 		{
+			if (FireCooldown > 0)
+				FireCooldown -= 0.1f;
+
 			if ((this.Player == 0 && this.X + this.FireRange >= this.Game.boardWidth) ||
 					(this.Player == 1 && this.X - this.FireRange <= 0))
 			{
 				// enemy player in range!
+				if (this.FireCooldown <= 0) //And the Cooldown has ticked down
+				{
+					this.FireCooldown = this.FireFrequency;
 
+					if (this.Player == 0)
+						this.Game.DealPlayerDamge(1, this.Damage);
+					else if (this.Player == 1)
+						this.Game.DealPlayerDamge(0, this.Damage);
+				}
+			}
+			else if (false)
+			{
+				// enemy unit in range!
+
+			}
+			else if (false)
+			{
+				// enemy unit in sight!
 			}
 			else
 			{
