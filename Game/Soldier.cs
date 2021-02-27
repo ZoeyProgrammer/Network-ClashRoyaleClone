@@ -5,6 +5,7 @@ namespace MyMultiPlayerGame.Game
 {
 	class Soldier : GameObject
 	{
+		public float EnergyCost { get; private set; }
 		public int HP { get; private set; }
 		public float Speed { get; private set; }
 		public float ViewRange { get; private set; }
@@ -17,6 +18,7 @@ namespace MyMultiPlayerGame.Game
 		public Soldier(Game game, int player)
 				: base(game)
 		{
+			this.EnergyCost = 2f;
 			this.Player = player;
 			this.HP = 10;
 			this.Speed = 5;

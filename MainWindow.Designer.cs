@@ -42,6 +42,7 @@
 			this.textBoxUsername = new System.Windows.Forms.TextBox();
 			this.labelPlayer0HP = new System.Windows.Forms.Label();
 			this.labelPlayer1HP = new System.Windows.Forms.Label();
+			this.labelPlayerEnergy = new System.Windows.Forms.Label();
 			this.SuspendLayout();
 			// 
 			// buttonConnect
@@ -159,11 +160,22 @@
 			this.labelPlayer1HP.TabIndex = 11;
 			this.labelPlayer1HP.Text = "Username1: HP";
 			// 
+			// labelPlayerEnergy
+			// 
+			this.labelPlayerEnergy.AutoSize = true;
+			this.labelPlayerEnergy.Location = new System.Drawing.Point(635, 98);
+			this.labelPlayerEnergy.Name = "labelPlayerEnergy";
+			this.labelPlayerEnergy.Size = new System.Drawing.Size(79, 13);
+			this.labelPlayerEnergy.TabIndex = 12;
+			this.labelPlayerEnergy.Text = "Energy: Energy";
+			this.labelPlayerEnergy.Click += new System.EventHandler(this.label2_Click);
+			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(829, 628);
+			this.Controls.Add(this.labelPlayerEnergy);
 			this.Controls.Add(this.labelPlayer1HP);
 			this.Controls.Add(this.labelPlayer0HP);
 			this.Controls.Add(this.textBoxUsername);
@@ -199,6 +211,7 @@
 		private System.Windows.Forms.TextBox textBoxUsername;
 		public System.Windows.Forms.Label labelPlayer0HP;
 		public System.Windows.Forms.Label labelPlayer1HP;
+		public System.Windows.Forms.Label labelPlayerEnergy;
 	}
 }
 

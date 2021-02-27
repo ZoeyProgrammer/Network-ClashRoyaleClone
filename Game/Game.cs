@@ -29,8 +29,8 @@ namespace MyMultiPlayerGame.Game
 		public string player0Name { get; set; } //Host Username
 		public int player1HP { get; set; } //User HP
 		public string player1Name { get; set; } //User Username
-		public int playerEnergy { get; set; }	//Player Energy
-		public int playerMaxEnergy { get; private set; } //Maximum amount of Energy
+		public float playerEnergy { get; set; }	//Player Energy
+		public float playerMaxEnergy { get; private set; } //Maximum amount of Energy
 
 		InputEvent[] collectedInputEvents;                              // events needed for next simulation
 		List<GameInput> futureEvents = new List<GameInput>();           // events needed after next simulation
@@ -55,9 +55,10 @@ namespace MyMultiPlayerGame.Game
 			this.collectedInputEvents = new InputEvent[numPlayers];
 			this.peers = peers;
 
-			//Inititilize the visible HP values
+			//Inititilize the visible HP values etc.
 			this.window.labelPlayer1HP.Text = this.player1Name + ": " + this.player1HP;
 			this.window.labelPlayer0HP.Text = this.player0Name + ": " + this.player0HP;
+			this.window.labelPlayerEnergy.Text = "Energy: " + this.playerEnergy;
 
 			this.allGameObjects.Clear();
 
@@ -138,6 +139,14 @@ namespace MyMultiPlayerGame.Game
 		{
 			System.Diagnostics.Debug.WriteLine("NextSimulationStep()");
 
+			//Energy Regerneration
+			if (this.playerEnergy < this.playerMaxEnergy)
+				this.playerEnergy += 0.1f;
+			else if (this.playerEnergy > this.playerMaxEnergy)
+				this.playerEnergy = this.playerMaxEnergy;
+
+			this.window.labelPlayerEnergy.Text = "Energy: " + Math.Round(this.playerEnergy, 1);
+
 			if (!this.running)
 				return;
 
@@ -155,7 +164,20 @@ namespace MyMultiPlayerGame.Game
 			for (int i = 0; i < this.collectedInputEvents.Length; ++i)
 			{
 				var input = this.collectedInputEvents[i];
-				if (input.UnitTypePlaced > 0)
+				//Check what type of unit to place
+				if (input.UnitTypePlaced == 1)
+				{
+					Soldier s = new Soldier(this, i);
+					if (i == this.myPlayerNumber)
+						this.playerEnergy -= s.EnergyCost;
+
+					this.allGameObjects.Add(new Soldier(this, i)
+					{
+						X = input.X,
+						Y = input.Y
+					});
+				}
+				else if (input.UnitTypePlaced == 10)
 				{
 					this.allGameObjects.Add(new Soldier(this, i)
 					{
@@ -163,6 +185,15 @@ namespace MyMultiPlayerGame.Game
 						Y = input.Y
 					});
 				}
+				else if (input.UnitTypePlaced == 11)
+				{
+					this.allGameObjects.Add(new Soldier(this, i)
+					{
+						X = input.X,
+						Y = input.Y
+					});
+				}
+
 
 				this.collectedInputEvents[i] = null;
 			}
@@ -243,14 +274,44 @@ namespace MyMultiPlayerGame.Game
 			return output;
 		}
 
-		public void SpawnSoldier(float x, float y)
+		public void SpawnSoldier(float x, float y, int unitType)
 		{
 			if (!running)
 				return;
 
+			byte UnitPlaced = 0;
+
+			switch (unitType) //Check if enough energy is available
+			{
+				case 1:
+					Soldier sold = new Soldier(this, this.myPlayerNumber);
+					if (sold.EnergyCost <= this.playerEnergy)
+					{
+						UnitPlaced = 1;
+					}
+					break;
+				case 2:
+					Soldier sold2 = new Soldier(this, this.myPlayerNumber);
+					if (sold2.EnergyCost <= this.playerEnergy)
+					{
+						UnitPlaced = 10;
+					}
+					break;
+				case 3:
+					Soldier sold3 = new Soldier(this, this.myPlayerNumber);
+					if (sold3.EnergyCost <= this.playerEnergy)
+					{
+						UnitPlaced = 11;
+					}
+					break;
+				default:
+					UnitPlaced = 0;
+					break;
+			}
+
 			this.myInput = new InputEvent()
 			{
-				UnitTypePlaced = 1,
+				UnitTypePlaced = UnitPlaced,
 				X = x,
 				Y = y
 			};
