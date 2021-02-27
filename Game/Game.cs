@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Drawing;
 using MyMultiPlayerGame.Messages;
+using System.Windows.Forms;
 
 namespace MyMultiPlayerGame.Game
 {
@@ -21,6 +22,7 @@ namespace MyMultiPlayerGame.Game
 
 		//All variables needed for the game
 		public MainWindow window { get; set; }
+		public int currentlySelectedUnit { get; set; }
 		public int numPlayers { get; private set; }
 		public int myPlayerNumber { get; private set; }
 		public int boardWidth { get; private set; }
@@ -42,6 +44,7 @@ namespace MyMultiPlayerGame.Game
 		public void Start(int numPlayers, int myPlayerNumber, List<NetworkConnection> peers)
 		{
 			System.Diagnostics.Debug.WriteLine("Start()");
+			this.currentlySelectedUnit = 0;
 			this.player0HP = 100;
 			this.player1HP = 100;
 			this.playerEnergy = 10;
@@ -55,10 +58,13 @@ namespace MyMultiPlayerGame.Game
 			this.collectedInputEvents = new InputEvent[numPlayers];
 			this.peers = peers;
 
-			//Inititilize the visible HP values etc.
+			//Inititilize the visible HP values and other UI things
 			this.window.labelPlayer1HP.Text = this.player1Name + ": " + this.player1HP;
 			this.window.labelPlayer0HP.Text = this.player0Name + ": " + this.player0HP;
 			this.window.labelPlayerEnergy.Text = "Energy: " + this.playerEnergy;
+			this.window.buttonUnit1.Enabled = true;
+			this.window.buttonUnit2.Enabled = true;
+			this.window.buttonUnit3.Enabled = true;
 
 			this.allGameObjects.Clear();
 
@@ -167,11 +173,11 @@ namespace MyMultiPlayerGame.Game
 				//Check what type of unit to place
 				if (input.UnitTypePlaced == 1)
 				{
-					Soldier s = new Soldier(this, i);
+					Soldier s = new Soldier1(this, i);
 					if (i == this.myPlayerNumber)
 						this.playerEnergy -= s.EnergyCost;
 
-					this.allGameObjects.Add(new Soldier(this, i)
+					this.allGameObjects.Add(new Soldier1(this, i)
 					{
 						X = input.X,
 						Y = input.Y
@@ -179,7 +185,11 @@ namespace MyMultiPlayerGame.Game
 				}
 				else if (input.UnitTypePlaced == 10)
 				{
-					this.allGameObjects.Add(new Soldier(this, i)
+					Soldier s = new Soldier2(this, i);
+					if (i == this.myPlayerNumber)
+						this.playerEnergy -= s.EnergyCost;
+
+					this.allGameObjects.Add(new Soldier2(this, i)
 					{
 						X = input.X,
 						Y = input.Y
@@ -187,7 +197,11 @@ namespace MyMultiPlayerGame.Game
 				}
 				else if (input.UnitTypePlaced == 11)
 				{
-					this.allGameObjects.Add(new Soldier(this, i)
+					Soldier s = new Soldier3(this, i);
+					if (i == this.myPlayerNumber)
+						this.playerEnergy -= s.EnergyCost;
+
+					this.allGameObjects.Add(new Soldier3(this, i)
 					{
 						X = input.X,
 						Y = input.Y
@@ -223,6 +237,26 @@ namespace MyMultiPlayerGame.Game
 				{
 					ReceiveGameInput(message);
 				}
+			}
+
+			//Check if the game has ended
+			if (player0HP <= 0)
+			{
+				this.Stop();
+
+				if (this.myPlayerNumber == 0)
+					MessageBox.Show("Du habst verloren");
+				else
+					MessageBox.Show("Du habst gewonnen");
+			}
+			else if (player1HP <= 0)
+			{
+				this.Stop();
+
+				if (this.myPlayerNumber == 0)
+					MessageBox.Show("Du habst gewonnen");
+				else
+					MessageBox.Show("Du habst verloren");
 			}
 		}
 
@@ -284,21 +318,21 @@ namespace MyMultiPlayerGame.Game
 			switch (unitType) //Check if enough energy is available
 			{
 				case 1:
-					Soldier sold = new Soldier(this, this.myPlayerNumber);
+					Soldier sold = new Soldier1(this, this.myPlayerNumber);
 					if (sold.EnergyCost <= this.playerEnergy)
 					{
 						UnitPlaced = 1;
 					}
 					break;
 				case 2:
-					Soldier sold2 = new Soldier(this, this.myPlayerNumber);
+					Soldier sold2 = new Soldier2(this, this.myPlayerNumber);
 					if (sold2.EnergyCost <= this.playerEnergy)
 					{
 						UnitPlaced = 10;
 					}
 					break;
 				case 3:
-					Soldier sold3 = new Soldier(this, this.myPlayerNumber);
+					Soldier sold3 = new Soldier3(this, this.myPlayerNumber);
 					if (sold3.EnergyCost <= this.playerEnergy)
 					{
 						UnitPlaced = 11;

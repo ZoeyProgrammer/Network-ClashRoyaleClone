@@ -5,14 +5,14 @@ namespace MyMultiPlayerGame.Game
 {
 	class Soldier : GameObject
 	{
-		public float EnergyCost { get; private set; }
-		public int HP { get; private set; }
-		public float Speed { get; private set; }
-		public float ViewRange { get; private set; }
-		public float FireRange { get; private set; }
-		public float FireFrequency { get; private set; }
-		public int Damage { get; private set; }
-		public int Player { get; private set; }
+		public float EnergyCost { get; set; }
+		public int HP { get; set; }
+		public float Speed { get; set; }
+		public float ViewRange { get; set; }
+		public float FireRange { get; set; }
+		public float FireFrequency { get;  set; }
+		public int Damage { get; set; }
+		public int Player { get; set; }
 		private float FireCooldown;
 
 		public Soldier(Game game, int player)

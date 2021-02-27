@@ -43,6 +43,9 @@
 			this.labelPlayer0HP = new System.Windows.Forms.Label();
 			this.labelPlayer1HP = new System.Windows.Forms.Label();
 			this.labelPlayerEnergy = new System.Windows.Forms.Label();
+			this.buttonUnit1 = new System.Windows.Forms.Button();
+			this.buttonUnit2 = new System.Windows.Forms.Button();
+			this.buttonUnit3 = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// buttonConnect
@@ -170,11 +173,44 @@
 			this.labelPlayerEnergy.Text = "Energy: Energy";
 			this.labelPlayerEnergy.Click += new System.EventHandler(this.label2_Click);
 			// 
+			// buttonUnit1
+			// 
+			this.buttonUnit1.Location = new System.Drawing.Point(638, 130);
+			this.buttonUnit1.Name = "buttonUnit1";
+			this.buttonUnit1.Size = new System.Drawing.Size(75, 23);
+			this.buttonUnit1.TabIndex = 13;
+			this.buttonUnit1.Text = "Unit1";
+			this.buttonUnit1.UseVisualStyleBackColor = true;
+			this.buttonUnit1.Click += new System.EventHandler(this.buttonUnit1_Click);
+			// 
+			// buttonUnit2
+			// 
+			this.buttonUnit2.Location = new System.Drawing.Point(638, 159);
+			this.buttonUnit2.Name = "buttonUnit2";
+			this.buttonUnit2.Size = new System.Drawing.Size(75, 23);
+			this.buttonUnit2.TabIndex = 14;
+			this.buttonUnit2.Text = "Unit2";
+			this.buttonUnit2.UseVisualStyleBackColor = true;
+			this.buttonUnit2.Click += new System.EventHandler(this.buttonUnit2_Click);
+			// 
+			// buttonUnit3
+			// 
+			this.buttonUnit3.Location = new System.Drawing.Point(639, 188);
+			this.buttonUnit3.Name = "buttonUnit3";
+			this.buttonUnit3.Size = new System.Drawing.Size(75, 23);
+			this.buttonUnit3.TabIndex = 15;
+			this.buttonUnit3.Text = "Unit3";
+			this.buttonUnit3.UseVisualStyleBackColor = true;
+			this.buttonUnit3.Click += new System.EventHandler(this.buttonUnit3_Click);
+			// 
 			// MainWindow
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(829, 628);
+			this.Controls.Add(this.buttonUnit3);
+			this.Controls.Add(this.buttonUnit2);
+			this.Controls.Add(this.buttonUnit1);
 			this.Controls.Add(this.labelPlayerEnergy);
 			this.Controls.Add(this.labelPlayer1HP);
 			this.Controls.Add(this.labelPlayer0HP);
@@ -212,6 +248,9 @@
 		public System.Windows.Forms.Label labelPlayer0HP;
 		public System.Windows.Forms.Label labelPlayer1HP;
 		public System.Windows.Forms.Label labelPlayerEnergy;
+		public System.Windows.Forms.Button buttonUnit1;
+		public System.Windows.Forms.Button buttonUnit2;
+		public System.Windows.Forms.Button buttonUnit3;
 	}
 }
 

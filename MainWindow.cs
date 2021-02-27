@@ -36,6 +36,9 @@ namespace MyMultiPlayerGame
 
 			this.buttonStartGame.Enabled = false;
 			this.buttonReady.Enabled = false;
+			this.buttonUnit1.Enabled = false;
+			this.buttonUnit2.Enabled = false;
+			this.buttonUnit3.Enabled = false;
 		}
 
 		private void buttonConnect_Click(object sender, EventArgs e)
@@ -237,6 +240,36 @@ namespace MyMultiPlayerGame
 		private void label2_Click(object sender, EventArgs e)
 		{
 
+		}
+
+		//Select Unit 1
+		private void buttonUnit1_Click(object sender, EventArgs e)
+		{
+			this.buttonUnit1.Enabled = false;
+			this.buttonUnit2.Enabled = true;
+			this.buttonUnit3.Enabled = true;
+
+			this.myGame.currentlySelectedUnit = 1;
+		}
+
+		//Select Unit 2
+		private void buttonUnit2_Click(object sender, EventArgs e)
+		{
+			this.buttonUnit1.Enabled = true;
+			this.buttonUnit2.Enabled = false;
+			this.buttonUnit3.Enabled = true;
+
+			this.myGame.currentlySelectedUnit = 2;
+		}
+
+		//Select Unit 3
+		private void buttonUnit3_Click(object sender, EventArgs e)
+		{
+			this.buttonUnit1.Enabled = true;
+			this.buttonUnit2.Enabled = true;
+			this.buttonUnit3.Enabled = false;
+
+			this.myGame.currentlySelectedUnit = 3;
 		}
 	}
 }
